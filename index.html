@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create and share personalized Christmas greeting cards">
+    <meta property="og:title" content="Christmas Greeting Card">
+    <meta property="og:description" content="Create and share festive Christmas wishes">
+    <meta property="og:type" content="website">
+    <title>Christmas Greeting Card 2025</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-red: #c41e3a;
+            --primary-green: #0f5132;
+            --gold: #ffd700;
+            --snow-white: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a472a 0%, #2d1b1b 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        /* Snowfall Animation */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            z-index: 9999;
+            user-select: none;
+            cursor: default;
+            animation: snowfall linear infinite;
+            color: white;
+            font-size: 1em;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+        
+        @keyframes snowfall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.8;
+            }
+        }
+        
+        /* Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            color: var(--snow-white);
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            opacity: 0.9;
+        }
+        
+        /* Input Section */
+        .input-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px var(--card-shadow);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .input-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .name-input {
+            font-size: 1.1rem;
+            padding: 15px;
+            border: 2px solid var(--primary-green);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .name-input:focus {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 10px rgba(196, 30, 58, 0.3);
+            outline: none;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, var(--primary-red) 0%, #8b1a2f 100%);
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+            min-width: 200px;
+            min-height: 44px;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 30, 58, 0.6);
+        }
+        
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Card Section */
+        .card-section {
+            display: none;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .card-section.active {
+            display: block;
+        }
+        
+        .christmas-card {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px var(--card-shadow);
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-image 0.6s ease;
+        }
+        
+        /* Glowing border effect */
+        .christmas-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ffff00, #ff0000);
+            background-size: 400% 400%;
+            border-radius: 20px;
+            z-index: -1;
+            animation: glowingBorder 3s ease infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes glowingBorder {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-content h3 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            }
+            50% {
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.8);
+            }
+        }
+        
+        .card-content p {
+            font-family: 'Crimson Text', serif;
+            color: var(--snow-white);
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        .recipient-name {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            display: block;
+            margin-top: 15px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Control Buttons */
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-width: 150px;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .control-btn:hover {
+            background: var(--primary-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(15, 81, 50, 0.4);
+        }
+        
+        .control-btn i {
+            font-size: 1.1em;
+        }
+        
+        /* Share Buttons */
+        .share-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .share-section h3 {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .share-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .share-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+        }
+        
+        .share-btn.whatsapp {
+            background: #25D366;
+        }
+        
+        .share-btn.facebook {
+            background: #1877f2;
+        }
+        
+        .share-btn.twitter {
+            background: #1DA1F2;
+        }
+        
+        .share-btn.download {
+            background: var(--primary-red);
+        }
+        
+        .share-btn.copy {
+            background: var(--primary-green);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid var(--gold);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .input-section {
+                padding: 20px;
+            }
+            
+            .card-content {
+                padding: 25px;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+            }
+            
+            .control-btn, .share-btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            body {
+                padding: 10px;
+            }
+            
+            .christmas-card {
+                min-height: 400px;
+            }
+            
+            .card-content {
+                padding: 20px;
+            }
+        }
+        
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowfall Container -->
+    <div id="snowfall-container"></div>
+    
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="main-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎄 Christmas Greeting Card 2025 🎄</h1>
+            <p>Create your personalized festive wishes and share the joy!</p>
+        </header>
+        
+        <!-- Input Section -->
+        <section class="input-section">
+            <h2>Enter Recipient's Name</h2>
+            <div class="row g-3 align-items-center">
+                <div class="col-md-8">
+                    <input type="text" class="form-control name-input" id="nameInput" 
+                           placeholder="Enter name here..." 
+                           maxlength="50"
+                           aria-label="Recipient name">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn generate-btn w-100" id="generateBtn" type="button">
+                        <i class="fas fa-magic"></i> Generate Card
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Card Section -->
+        <section class="card-section" id="cardSection">
+            <div class="christmas-card" id="christmasCard">
+                <div class="card-content" id="cardContent">
+                    <h3>🎅 Merry Christmas! 🎅</h3>
+                    <p id="wishMessage">Loading your special message...</p>
+                    <span class="recipient-name" id="displayName"></span>
+                </div>
+            </div>
+            
+            <!-- Control Buttons -->
+            <div class="control-buttons">
+                <button class="control-btn" id="changeBackgroundBtn">
+                    <i class="fas fa-image"></i> Change Background
+                </button>
+                <button class="control-btn" id="randomizeWishBtn">
+                    <i class="fas fa-sync-alt"></i> New Wish
+                </button>
+                <button class="control-btn" id="changeNameBtn">
+                    <i class="fas fa-user-edit"></i> Change Name
+                </button>
+            </div>
+            
+            <!-- Share Section -->
+            <div class="share-section">
+                <h3>✨ Share Your Card ✨</h3>
+                <div class="share-buttons">
+                    <button class="share-btn whatsapp" id="shareWhatsApp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                    <button class="share-btn facebook" id="shareFacebook">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                    <button class="share-btn twitter" id="shareTwitter">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </button>
+                    <button class="share-btn download" id="downloadBtn">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="share-btn copy" id="copyLinkBtn">
+                        <i class="fas fa-link"></i> Copy Link
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Christmas Greeting Card | Made with ❤️ and festive cheer</p>
+        </footer>
+    </div>
+    
+    <!-- html2canvas for downloading card -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <script>
+        // Christmas Wishes Collection (50+ unique wishes)
+        const christmasWishes = [
+            "May your Christmas sparkle with moments of love, laughter, and goodwill. Wishing you a joyous season!",
+            "Wishing you a magical Christmas filled with wonder and delight. May your heart be filled with the warmth of the season!",
+            "May the spirit of Christmas bring you peace, the gladness of Christmas give you hope, and the warmth of Christmas grant you love.",
+            "Sending you warm wishes for a holiday season filled with happiness, love, and cherished memories!",
+            "May your Christmas be wrapped in happiness and tied with love. Have a wonderful holiday season!",
+            "Wishing you all the joy and magic of the Christmas season. May your days be merry and bright!",
+            "May the beauty of the Christmas season fill your home with happiness and your heart with love!",
+            "Sending you blessings for a Christmas that's merry and bright, and a New Year filled with hope!",
+            "May your Christmas be decorated with cheer and filled with love. Wishing you a blessed holiday!",
+            "Wishing you a season of blessings, a heart full of love, and a Christmas filled with peace!",
+            "May the magic of Christmas fill every corner of your heart and home with joy and happiness!",
+            "Sending you warm Christmas greetings wrapped in love and tied with the best wishes for the coming year!",
+            "May your Christmas be filled with special moments, warmth, peace, and happiness!",
+            "Wishing you a Christmas that's bright with hope, rich with love, and blessed with joy!",
+            "May the Christmas season fill your heart with love, your home with joy, and your life with laughter!",
+            "Sending you wishes for a Christmas filled with the warmth of loved ones and the joy of the season!",
+            "May your Christmas be merry and your New Year be bright. Wishing you all the best!",
+            "Wishing you a holiday season that's merry and bright, and a New Year filled with delight!",
+            "May the wonder of the first Christmas, the joy of this Christmas, be with you throughout the year!",
+            "Sending you love, joy, and peace this Christmas season. May your holidays be truly magical!",
+            "May your Christmas be touched with beauty, filled with love, and blessed with every good thing!",
+            "Wishing you a Christmas filled with sweet surprises and all the things that bring you joy!",
+            "May the spirit of Christmas bring you and your family endless joy and happiness!",
+            "Sending you warmest wishes for a wonderful Christmas and a Happy New Year filled with success!",
+            "May your Christmas be filled with the true miracles and meaning of this beautiful time of year!",
+            "Wishing you peace, love, and joy this Christmas season and throughout the coming year!",
+            "May the melody and spirit of the holidays fill your home with love and peace!",
+            "Sending you heartfelt wishes for a Christmas that's as special as you are!",
+            "May your Christmas be blessed with love and surrounded by family and friends!",
+            "Wishing you a season of joy, a season of cheer, and a wonderful start to the coming year!",
+            "May the Christmas candles light your way to happiness, success, and fulfillment!",
+            "Sending you warm wishes and a big hug for a wonderful Christmas celebration!",
+            "May your Christmas be wrapped in happiness and filled with laughter and love!",
+            "Wishing you a holiday season filled with love, laughter, and all your favorite things!",
+            "May the Christmas spirit stay with you throughout the year, bringing happiness and joy!",
+            "Sending you Christmas wishes filled with love, peace, and all things wonderful!",
+            "May your Christmas be merry, your New Year be bright, and your blessings be countless!",
+            "Wishing you a Christmas filled with good food, great company, and beautiful memories!",
+            "May the peace and joy of Christmas be with you today and throughout the New Year!",
+            "Sending you the warmest Christmas greetings and best wishes for a prosperous New Year!",
+            "May your Christmas be filled with moments that warm your heart and make you smile!",
+            "Wishing you a festive season that sparkles with fun and happiness!",
+            "May the magic of Christmas bring endless joy to you and your loved ones!",
+            "Sending you love and cheer for a wonderful Christmas and a fantastic New Year!",
+            "May your Christmas be filled with blessings, both great and small, and may you treasure them all!",
+            "Wishing you a Christmas season filled with love, light, and laughter!",
+            "May your heart be touched by the magic of Christmas and filled with love!",
+            "Sending you wishes for a holiday season that's merry, bright, and unforgettable!",
+            "May your Christmas be as sweet as candy canes and as bright as twinkling lights!",
+            "Wishing you a joyous Christmas celebration and a prosperous year ahead!",
+            "May the Christmas season bring you closer to all those you treasure in your heart!",
+            "Sending you warm wishes for a holiday filled with peace, love, and joy!",
+            "May your Christmas be blessed with the presence of loved ones and the comfort of warm traditions!",
+            "Wishing you a magical Christmas that fills your heart with childlike wonder and joy!",
+            "May the spirit of giving fill your heart with warmth and happiness this Christmas!"
+        ];
+        
+        // Background Images from Unsplash (Christmas-themed)
+        const backgroundImages = [
+            'https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1200',
+            'https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1200',
+            'https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1200',
+            'https://images.unsplash.com/photo-1576919228236-a097c32a5cd4?w=1200',
+            'https://images.unsplash.com/photo-1544273677-1c5e2be3eeef?w=1200',
+            'https://images.unsplash.com/photo-1514517521153-1be72277b32f?w=1200',
+            'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=1200',
+            'https://images.unsplash.com/photo-1545016776-d2d155f97406?w=1200',
+            'https://images.unsplash.com/photo-1512916206820-bd1742a7ff07?w=1200',
+            'https://images.unsplash.com/photo-1483193722442-5422d99849bc?w=1200',
+            'https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?w=1200',
+            'https://images.unsplash.com/photo-1480926965639-9b5f63a0817b?w=1200',
+            'https://images.unsplash.com/photo-1515131615479-b3e69a13c9be?w=1200',
+            'https://images.unsplash.com/photo-1513110694504-c51d8f1c1a43?w=1200'
+        ];
+        
+        // State Management
+        let currentBackgroundIndex = 0;
+        let currentWishIndex = 0;
+        let userName = '';
+        
+        // DOM Elements
+        const nameInput = document.getElementById('nameInput');
+        const generateBtn = document.getElementById('generateBtn');
+        const cardSection = document.getElementById('cardSection');
+        const christmasCard = document.getElementById('christmasCard');
+        const wishMessage = document.getElementById('wishMessage');
+        const displayName = document.getElementById('displayName');
+        const changeBackgroundBtn = document.getElementById('changeBackgroundBtn');
+        const randomizeWishBtn = document.getElementById('randomizeWishBtn');
+        const changeNameBtn = document.getElementById('changeNameBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        // Initialize snowfall
+        function createSnowflakes() {
+            const snowfallContainer = document.getElementById('snowfall-container');
+            const numberOfFlakes = window.innerWidth > 768 ? 50 : 30;
+            
+            for (let i = 0; i < numberOfFlakes; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+                snowfallContainer.appendChild(snowflake);
+            }
+        }
+        
+        // Preload images
+        function preloadImages() {
+            backgroundImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+        
+        // Set random background
+        function setRandomBackground() {
+            currentBackgroundIndex = Math.floor(Math.random() * backgroundImages.length);
+            christmasCard.style.backgroundImage = `url('${backgroundImages[currentBackgroundIndex]}')`;
+        }
+        
+        // Change background
+        function changeBackground() {
+            currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
+            christmasCard.style.backgroundImage = `url('${backgroundImages[currentBackgroundIndex]}')`;
+        }
+        
+        // Get random wish
+        function getRandomWish() {
+            currentWishIndex = Math.floor(Math.random() * christmasWishes.length);
+            return christmasWishes[currentWishIndex];
+        }
+        
+        // Randomize wish
+        function randomizeWish() {
+            wishMessage.style.opacity = '0';
+            setTimeout(() => {
+                wishMessage.textContent = getRandomWish();
+                wishMessage.style.transition = 'opacity 0.5s ease';
+                wishMessage.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Generate card
+        function generateCard() {
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('Please enter a name!');
+                nameInput.focus();
+                return;
+            }
+            
+            userName = name;
+            displayName.textContent = `~ ${userName} ~`;
+            wishMessage.textContent = getRandomWish();
+            
+            setRandomBackground();
+            cardSection.classList.add('active');
+            
+            // Scroll to card
+            setTimeout(() => {
+                cardSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+        
+        // Change name
+        function changeName() {
+            cardSection.classList.remove('active');
+            nameInput.value = '';
+            nameInput.focus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Share on WhatsApp
+        function shareWhatsApp() {
+            const message = `🎄 Merry Christmas ${userName}! 🎄\n\nCheck out this personalized Christmas card I created for you!\n\n${window.location.href}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        }
+        
+        // Share on Facebook
+        function shareFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+        }
+        
+        // Share on Twitter
+        function shareTwitter() {
+            const text = `🎄 Merry Christmas ${userName}! Check out this beautiful Christmas card! 🎅`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+        }
+        
+        // Download card
+        async function downloadCard() {
+            loadingSpinner.style.display = 'block';
+            
+            try {
+                const canvas = await html2canvas(christmasCard, {
+                    backgroundColor: null,
+                    scale: 2,
+                    logging: false,
+                    useCORS: true
+                });
+                
+                const link = document.createElement('a');
+                link.download = `Christmas_Card_${userName}_2025.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (error) {
+                console.error('Error downloading card:', error);
+                alert('Failed to download card. Please try again.');
+            } finally {
+                loadingSpinner.style.display = 'none';
+            }
+        }
+        
+        // Copy link
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href)
+                .then(() => {
+                    alert('Link copied to clipboard! 📋');
+                })
+                .catch(() => {
+                    alert('Failed to copy link. Please try again.');
+                });
+        }
+        
+        // Event Listeners
+        generateBtn.addEventListener('click', generateCard);
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') generateCard();
+        });
+        changeBackgroundBtn.addEventListener('click', changeBackground);
+        randomizeWishBtn.addEventListener('click', randomizeWish);
+        changeNameBtn.addEventListener('click', changeName);
+        document.getElementById('shareWhatsApp').addEventListener('click', shareWhatsApp);
+        document.getElementById('shareFacebook').addEventListener('click', shareFacebook);
+        document.getElementById('shareTwitter').addEventListener('click', shareTwitter);
+        document.getElementById('downloadBtn').addEventListener('click', downloadCard);
+        document.getElementById('copyLinkBtn').addEventListener('click', copyLink);
+        
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            createSnowflakes();
+            preloadImages();
+            nameInput.focus();
+        });
+    </script>
+</body>
+</html>
