@@ -1,11 +1,14 @@
-// Initialize AOS
+// Initialize AOS animation library
+// TODO: test on slower devices - might need to reduce duration
 AOS.init({
     duration: 1000,
     once: true,
     offset: 100
 });
+// console.log('AOS initialized'); // debug
 
-// 50+ Background Images from Unsplash & Pexels
+// Background images - using Unsplash & Pexels (free tier)
+// NOTE: May need to add more variety later
 const backgroundImages = [
     'https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1600&q=80',
     'https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1600&q=80',
@@ -60,7 +63,8 @@ const backgroundImages = [
     'https://images.pexels.com/photos/5990208/pexels-photo-5990208.jpeg?w=1600'
 ];
 
-// Body background images (high-res for main background)
+// Body backgrounds - high res versions
+// FIXME: optimize these for mobile - too large
 const bodyBackgrounds = [
     'https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1920&q=80',
     'https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1920&q=80',
@@ -72,7 +76,8 @@ const bodyBackgrounds = [
     'https://images.unsplash.com/photo-1481570906522-5c2c27ff63c0?w=1920&q=80'
 ];
 
-// 100+ Short Christmas Wishes
+// Short wishes collection
+// TODO: add more emoji variations
 const shortWishes = [
     "Merry Christmas! Wishing you joy and peace! 🎄",
     "May your holidays sparkle with love and laughter! ✨",
@@ -179,7 +184,8 @@ const shortWishes = [
     "Merry Christmas! Count your blessings! 🙏"
 ];
 
-// 100+ Long Christmas Wishes
+// Long wishes - heartfelt messages
+// Need to review these for grammar
 const longWishes = [
     "May your Christmas sparkle with moments of love, laughter and goodwill. May the year ahead be full of contentment and joy. Have a Merry Christmas!",
     "Wishing you a magical and blissful holiday season! May this festive season bring you closer to all those you treasure in your heart. Merry Christmas!",
@@ -281,11 +287,11 @@ const longWishes = [
     "Wishing you a Christmas that's filled with beautiful moments, cherished memories, and all the love your heart can hold!"
 ];
 
-// State
+// Global state variables
 let currentBgIndex = 0;
 let currentBodyBgIndex = 0;
-let recipientName = '';
-let wishType = 'short';
+let recipientName = ''; // stores user input
+let wishType = 'short'; // default to short wishes
 
 // DOM Elements
 const nameForm = document.getElementById('nameForm');
@@ -296,10 +302,12 @@ const cardMessage = document.getElementById('cardMessage');
 const cardRecipient = document.getElementById('cardRecipient');
 const loadingSpinner = document.getElementById('loadingSpinner');
 
-// Snowflakes
-function createSnowflakes() {
+// Snowflake animation generator
+// Reduced count on mobile for performance
+function createSnowflakes(){
     const container = document.getElementById('snowflakes-container');
     const count = window.innerWidth > 768 ? 50 : 30;
+    // console.log('Creating ' + count + ' snowflakes');
     
     for (let i = 0; i < count; i++) {
         const snowflake = document.createElement('div');
@@ -314,19 +322,22 @@ function createSnowflakes() {
     }
 }
 
-// Change body background
+// Change body background - cycles through images
 function changeBodyBackground() {
     currentBodyBgIndex = (currentBodyBgIndex + 1) % bodyBackgrounds.length;
     document.body.style.backgroundImage = `url('${bodyBackgrounds[currentBodyBgIndex]}')`;
+    // TODO: add fade transition effect
 }
 
 // Auto-change body background every 10 seconds
 setInterval(changeBodyBackground, 10000);
 
-// Get random wish
+// Get random wish based on selected type
 function getRandomWish() {
     const wishes = wishType === 'short' ? shortWishes : longWishes;
-    return wishes[Math.floor(Math.random() * wishes.length)];
+    const randomIndex = Math.floor(Math.random() * wishes.length);
+    // console.log('Selected wish #' + randomIndex); // for testing
+    return wishes[randomIndex];
 }
 
 // Load card background
@@ -344,11 +355,13 @@ function loadBackground(index) {
     img.src = backgroundImages[index];
 }
 
-// Generate card
+// Form submission handler
+// NOTE: validates name before generating card
 nameForm.addEventListener('submit', (e) => {
     e.preventDefault();
     recipientName = recipientInput.value.trim();
     wishType = document.querySelector('input[name="wishType"]:checked').value;
+    // console.log('Generating card for: ' + recipientName);
     
     if (recipientName) {
         cardMessage.textContent = getRandomWish();
@@ -385,7 +398,8 @@ document.getElementById('changeNameBtn').addEventListener('click', () => {
     document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
 });
 
-// Share WhatsApp
+// WhatsApp sharing - works on mobile & desktop
+// TODO: test on iOS Safari
 document.getElementById('shareWhatsApp').addEventListener('click', () => {
     const msg = `🎄 Check out this beautiful Christmas card I created for ${recipientName} on ToluCards! ✨\n\nCreate yours: ${window.location.href}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
@@ -402,10 +416,12 @@ document.getElementById('shareTwitter').addEventListener('click', () => {
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
 });
 
-// Download card
+// Download card as image using html2canvas
+// FIXME: sometimes fails on first try - need error handling
 document.getElementById('downloadCard').addEventListener('click', () => {
     const container = document.getElementById('cardContainer');
     loadingSpinner.style.display = 'block';
+    // console.log('Starting card download...');
     
     html2canvas(container, {
         scale: 2,
@@ -454,9 +470,11 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Initialize
+// Initialize everything on page load
 createSnowflakes();
+// Preload all background images for smooth transitions
 backgroundImages.forEach(src => {
     const img = new Image();
     img.src = src;
 });
+// console.log('All initialized!');

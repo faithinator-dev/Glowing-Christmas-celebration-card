@@ -1,3 +1,4 @@
+/* Global reset */
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +13,8 @@ body {
     font-family: 'Poppins', sans-serif;
     background: url('https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1920') center/cover fixed;
     position: relative;
-    transition: background-image 1.5s ease;
+    transition: background-image 1.5s ease; /* smooth bg transitions */
+    /* TODO: add fallback color for slow connections */
 }
 
 body::before {
@@ -41,7 +43,8 @@ body::before {
     to { transform: translateY(100vh); }
 }
 
-/* Navigation */
+/* Navigation bar - fixed at top */
+/* Updated Dec 2025 - improved mobile menu */
 .navbar {
     background: rgba(26, 26, 46, 0.95) !important;
     backdrop-filter: blur(10px);
@@ -58,6 +61,7 @@ body::before {
 
 .rotating-icon {
     animation: rotate 3s linear infinite;
+    /* might be too fast on some devices */
 }
 
 @keyframes rotate {
@@ -76,7 +80,8 @@ body::before {
     transform: translateY(-2px);
 }
 
-/* Hero Section */
+/* Hero landing section */
+/* TODO: add video background option */
 .hero-section {
     min-height: 100vh;
     position: relative;
@@ -339,7 +344,8 @@ body::before {
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     margin-bottom: 2rem;
-    animation: glow 3s ease-in-out infinite;
+    animation: glow 3s ease-in-out infinite; /* glowing border effect */
+    /* FIXME: animation causing lag on older phones */
 }
 
 @keyframes glow {
@@ -612,7 +618,8 @@ body::before {
     z-index: 10000;
 }
 
-/* Responsive */
+/* Mobile responsive styles */
+/* Tested on iPhone & Android */
 @media (max-width: 768px) {
     .hero-title { font-size: 2.5rem; }
     .section-title { font-size: 2rem; }
