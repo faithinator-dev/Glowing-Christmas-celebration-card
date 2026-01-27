@@ -413,9 +413,15 @@ body::before {
 }
 
 .card-signature {
-    font-family: 'Montserrat', sans-serif;
-    color: white;
+    font-family: 'Great Vibes', cursive;
+    color: rgba(255, 255, 255, 0.9);
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    font-size: 0.875rem;
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    margin: 0;
+    font-style: italic;
 }
 
 /* Controls */
