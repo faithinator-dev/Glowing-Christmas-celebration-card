@@ -1,26 +1,47 @@
-# 🎄 Christmas Greeting Card 2025 - MVP
+# � ToluCards - Year-Round Seasonal Greeting Cards 2026
 
-A fully responsive, interactive Christmas greeting card web application that allows users to personalize and share festive wishes.
+A fully responsive, interactive seasonal greeting card web application that allows users to personalize and share greetings for every month of the year, featuring 12 unique themes from New Year to Christmas.
 
-## 🎅 Features
+## 🌟 All-Year Events & Themes
 
-### Core Functionality
-- **Personalized Greetings**: Enter recipient's name for customized messages
-- **50+ Unique Christmas Wishes**: Random festive messages with each generation
-- **14 Beautiful Backgrounds**: High-quality Christmas-themed images from Unsplash
-- **Smooth Animations**: Falling snowflakes, glowing borders, and fade transitions
-- **Fully Responsive**: Works perfectly on all devices (mobile, tablet, desktop)
+### Monthly Celebrations
+- **January** 🎊 - New Year celebrations
+- **February** ❤️ - Valentine's Day romance
+- **March** 🍀 - Spring & St. Patrick's Day
+- **April** 🐰 - Easter & Spring renewal
+- **May** 💐 - Mother's Day appreciation
+- **June** 👨 - Father's Day celebration
+- **July** 🇺🇸 - Independence Day & Summer
+- **August** ☀️ - Summer fun & sunshine
+- **September** 🍂 - Fall & Back to School
+- **October** 🎃 - Halloween spooky fun
+- **November** 🦃 - Thanksgiving gratitude
+- **December** 🎄 - Christmas & Holidays
+
+## 🎅 Core Features
+
+### Dynamic Theme System
+- **Auto-Detection**: Automatically displays the current month's theme
+- **Manual Selection**: Choose any month/event from the dropdown
+- **12 Unique Themes**: Each month has custom colors, icons, particles, and messages
+- **Smooth Transitions**: Seamless theme switching with CSS animations
+
+### Personalized Greetings
+- **200+ Unique Messages**: Seasonal wishes for every occasion
+- **Short & Long Options**: Choose between quick messages or heartfelt notes
+- **50+ Backgrounds**: Curated seasonal images from Unsplash & Pexels
+- **Custom Names**: Personalize cards with recipient's name
 
 ### Interactive Elements
-- ✨ **Change Background**: Cycle through beautiful Christmas scenes
-- 🎲 **Randomize Wishes**: Get new festive messages instantly
+- ✨ **Change Background**: Cycle through beautiful seasonal scenes
+- 🎲 **Randomize Messages**: Get new wishes instantly
 - ✏️ **Change Name**: Edit recipient name anytime
-- ❄️ **Animated Snowfall**: Beautiful CSS snowflake animation
+- 🎭 **Seasonal Particles**: Animated snowflakes, hearts, leaves, bats, and more
 
 ### Sharing Options
 - 📱 **WhatsApp**: Share directly with pre-filled message
 - 📘 **Facebook**: Post to Facebook timeline
-- 🐦 **Twitter**: Tweet your Christmas card
+- 🐦 **Twitter**: Tweet your seasonal card
 - 💾 **Download**: Save card as high-quality PNG image
 - 🔗 **Copy Link**: Copy shareable link to clipboard
 
@@ -28,36 +49,53 @@ A fully responsive, interactive Christmas greeting card web application that all
 
 ### Installation
 1. Simply open `index.html` in any modern web browser
-2. No server or dependencies required - it's a standalone HTML file!
+2. No server or dependencies required - it's a standalone application!
 
 ### Usage
-1. **Enter Name**: Type the recipient's name in the input field
-2. **Generate Card**: Click "Generate Card" or press Enter
-3. **Customize**: 
+1. **Select Theme**: Choose your month/event or use auto-detection
+2. **Enter Name**: Type the recipient's name in the input field
+3. **Choose Message Type**: Pick short & sweet or long & heartfelt
+4. **Generate Card**: Click "Generate My ToluCard" or press Enter
+5. **Customize**: 
    - Click "Change Background" for different scenes
-   - Click "New Wish" for different messages
+   - Click "New Message" for different wishes
    - Click "Change Name" to create another card
-4. **Share**: Use the sharing buttons to spread Christmas cheer!
+6. **Share**: Use the sharing buttons to spread joy!
 
 ## 🎨 Design Features
 
+### Color Schemes (per month)
+- **January**: Gold & Navy (New Year elegance)
+- **February**: Pink & Red (Valentine's romance)
+- **March**: Green & Gold (Irish luck)
+- **April**: Pink & Purple (Easter pastels)
+- **May**: Pink & Rose (Mother's Day flowers)
+- **June**: Royal Blue & Gold (Father's Day honor)
+- **July**: Red, White & Blue (Patriotic pride)
+- **August**: Gold & Orange (Summer sunshine)
+- **September**: Brown & Gold (Autumn harvest)
+- **October**: Orange & Purple (Halloween spooky)
+- **November**: Brown & Gold (Thanksgiving warmth)
+- **December**: Red & Green (Christmas festivity)
+
+### Seasonal Particles
+- ❄️ Snowflakes (December)
+- ❤️ Hearts (February)
+- 🍀 Clovers (March)
+- 🌸 Petals (April)
+- 🌺 Flowers (May)
+- ⭐ Stars (June, July)
+- ☀️ Sunshine (August)
+- 🍂 Leaves (September, November)
+- 🦇 Bats (October)
+- ✨ Fireworks (January)
+
+### Typography
 - **Google Fonts**: 
   - Playfair Display (elegant headings)
   - Great Vibes (decorative script)
-  - Crimson Text (readable body text)
-  
-- **Color Scheme**:
-  - Christmas Red (#c41e3a)
-  - Forest Green (#0f5132)
-  - Gold Accents (#ffd700)
-  - Snow White (#ffffff)
-
-- **Effects**:
-  - Glowing border animation
-  - Text glow effects
-  - Smooth background transitions
-  - Falling snowflakes
-  - Hover animations on buttons
+  - Poppins (clean body text)
+  - Montserrat (bold accents)
 
 ## 📱 Responsive Breakpoints
 
@@ -75,52 +113,66 @@ A fully responsive, interactive Christmas greeting card web application that all
 
 ## 🛠️ Technologies Used
 
-- **HTML5**: Semantic markup
-- **CSS3**: Custom animations and responsive design
-- **Bootstrap 5**: Grid system and utilities
-- **Vanilla JavaScript**: All interactive functionality
-- **Font Awesome**: Social media icons
+- **HTML5**: Semantic markup with dynamic IDs
+- **CSS3**: Custom properties (CSS variables) for theming
+- **Vanilla JavaScript**: Theme management & interactivity
+- **Bootstrap 5**: Responsive grid and utilities
+- **Font Awesome 6**: Seasonal icons
+- **AOS**: Scroll animations
 - **html2canvas**: Card download feature
-- **Unsplash API**: High-quality background images
+- **Unsplash/Pexels**: High-quality seasonal images
 
 ## 📦 Dependencies (CDN)
 
-All dependencies are loaded via CDN - no installation required:
+All dependencies loaded via CDN - no installation required:
 - Bootstrap 5.3.2
 - Font Awesome 6.4.0
+- AOS 2.3.1
 - html2canvas 1.4.1
 - Google Fonts
 
 ## 🎯 Performance
 
-- **Load Time**: < 3 seconds on average connection
+- **Auto Theme Detection**: Loads current month on startup
 - **Image Preloading**: Backgrounds preload for smooth transitions
 - **Optimized Animations**: Smooth 60fps animations
-- **Mobile Optimized**: Reduced snowflakes on mobile devices
+- **Mobile Optimized**: Reduced particles on mobile devices
+- **CSS Variables**: Fast theme switching without page reload
 
-## 🔮 Future Enhancements
+## 🔮 Technical Highlights
 
-Potential features for full version:
-- [ ] 200+ background images
-- [ ] 300+ wishes in multiple languages
-- [ ] Background music toggle
-- [ ] Custom message input
-- [ ] Dark/Light mode
-- [ ] Language selector (English, French, Yoruba, Hausa, Igbo)
-- [ ] Print-friendly version
-- [ ] More sharing platforms
-- [ ] Animation customization
-- [ ] Color theme selector
+### Theme System Architecture
+```javascript
+monthlyThemes = {
+    0-11: {
+        name, colors, icons, particles,
+        heroBadgeText, heroOccasion, heroSubtitle
+    }
+}
+```
+
+### Dynamic Data Structures
+- `monthlyBackgrounds`: Seasonal image arrays per month
+- `monthlyBodyBackgrounds`: Large hero backgrounds
+- `monthlyShortWishes`: Quick greetings (8-12 per month)
+- `monthlyLongWishes`: Heartfelt messages (3-5 per month)
+
+### Core Functions
+- `applyTheme(monthIndex)`: Applies all theme elements
+- `updateParticles(particleType)`: Creates seasonal animations
+- `getRandomWish(monthIndex)`: Returns month-specific message
+- `loadBackground(monthIndex, bgIndex)`: Loads themed backgrounds
 
 ## 📄 License
 
-Free to use for personal and commercial projects. 
+Free to use for personal and commercial projects.
 
 ## 🙏 Credits
 
-- **Background Images**: [Unsplash](https://unsplash.com)
+- **Background Images**: [Unsplash](https://unsplash.com) & [Pexels](https://pexels.com)
 - **Icons**: [Font Awesome](https://fontawesome.com)
 - **Fonts**: [Google Fonts](https://fonts.google.com)
+- **Developer**: ToluTek | Faithinator
 
 ## 💝 Contributing
 
@@ -132,4 +184,4 @@ For issues or questions, please open an issue in the repository.
 
 ---
 
-**Made with ❤️ and festive cheer | Merry Christmas! 🎄🎅🎁**
+**Made with ❤️ for every season | Celebrate all year! 🎉🎊🎈**

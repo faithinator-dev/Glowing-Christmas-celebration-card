@@ -5,6 +5,15 @@
     box-sizing: border-box;
 }
 
+/* CSS Variables for Dynamic Theming */
+:root {
+    --primary-color: #C41E3A;
+    --secondary-color: #165B33;
+    --accent-color: #FFD700;
+    --gradient-start: rgba(22, 91, 51, 0.85);
+    --gradient-end: rgba(196, 30, 58, 0.85);
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -13,8 +22,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background: url('https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1920') center/cover fixed;
     position: relative;
-    transition: background-image 1.5s ease; /* smooth bg transitions */
-    /* TODO: add fallback color for slow connections */
+    transition: background-image 1.5s ease;
 }
 
 body::before {
@@ -24,7 +32,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(22, 91, 51, 0.85), rgba(196, 30, 58, 0.85));
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    transition: background 1s ease;
     z-index: -1;
 }
 
@@ -291,7 +300,7 @@ body::before {
 
 .feature-icon {
     font-size: 3rem;
-    color: #C41E3A;
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
@@ -311,13 +320,26 @@ body::before {
 
 .form-control {
     padding: 1rem;
-    border: 2px solid #165B33;
+    border: 2px solid var(--secondary-color);
     border-radius: 10px;
     font-size: 1.1rem;
 }
 
 .form-control:focus {
-    border-color: #FFD700;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.form-select {
+    padding: 1rem;
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.form-select:focus {
+    border-color: var(--accent-color);
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 

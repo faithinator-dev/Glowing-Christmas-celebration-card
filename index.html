@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ToluCards - Create personalized Christmas greeting cards with 50+ backgrounds and 200+ wishes">
-    <meta property="og:title" content="ToluCards - Festive Christmas Greetings">
-    <meta property="og:description" content="Create and share beautiful personalized Christmas cards">
-    <title>ToluCards - Create & Share Festive Christmas Greetings</title>
+    <meta name="description" content="ToluCards - Create personalized seasonal greeting cards with 50+ backgrounds and 200+ wishes for every month">
+    <meta property="og:title" content="ToluCards - Year-Round Seasonal Greetings">
+    <meta property="og:description" content="Create and share beautiful personalized greeting cards for holidays and events all year long">
+    <title>ToluCards - Year-Round Seasonal Greeting Cards</title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#home">
-                <i class="fas fa-snowflake rotating-icon"></i> <span>ToluCards</span>
+                <i id="brandIcon" class="fas fa-snowflake rotating-icon"></i> <span>ToluCards</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -55,13 +55,13 @@
                 <div class="col-lg-6" data-aos="fade-right">
                     <div class="hero-content">
                         <div class="hero-badge">
-                            <i class="fas fa-gift"></i> Christmas 2025
+                            <i id="heroBadgeIcon" class="fas fa-gift"></i> <span id="heroBadgeText">Seasonal Greetings 2026</span>
                         </div>
                         <h1 class="hero-title">
-                            Create <span class="text-gradient">Magical</span><br>Christmas Cards
+                            Create <span class="text-gradient">Magical</span><br><span id="heroOccasion">Seasonal Cards</span>
                         </h1>
-                        <p class="hero-subtitle">
-                            Share joy, spread love, and create unforgettable memories with personalized festive greetings
+                        <p class="hero-subtitle" id="heroSubtitle">
+                            Create unforgettable memories with personalized greetings for holidays and events all year long
                         </p>
                         <div class="hero-buttons">
                             <a href="#generator" class="btn btn-hero-primary">
@@ -92,11 +92,11 @@
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
                     <div class="hero-image">
-                        <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800" alt="Christmas Card">
+                        <img id="heroImage" src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800" alt="Greeting Card">
                         <div class="floating-icons">
-                            <i class="fas fa-snowflake floating-icon"></i>
-                            <i class="fas fa-star floating-icon"></i>
-                            <i class="fas fa-gift floating-icon"></i>
+                            <i id="floatingIcon1" class="fas fa-snowflake floating-icon"></i>
+                            <i id="floatingIcon2" class="fas fa-star floating-icon"></i>
+                            <i id="floatingIcon3" class="fas fa-gift floating-icon"></i>
                         </div>
                     </div>
                 </div>
@@ -112,14 +112,14 @@
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <h2 class="section-title">Why Choose ToluCards?</h2>
-                <p class="section-subtitle">Everything you need for the perfect Christmas greeting</p>
+                <p class="section-subtitle" id="featuresSubtitle">Everything you need for the perfect seasonal greeting</p>
             </div>
             <div class="row g-4">
                 <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-palette"></i></div>
                         <h3>50+ Backgrounds</h3>
-                        <p>Beautiful Christmas-themed backgrounds</p>
+                        <p>Beautiful seasonal-themed backgrounds</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
@@ -159,6 +159,24 @@
                 <div class="col-lg-8" data-aos="fade-up">
                     <div class="input-card">
                         <form id="nameForm">
+                            <div class="mb-3">
+                                <label class="form-label">Select Event/Celebration</label>
+                                <select class="form-control" id="themeSelect">
+                                    <option value="auto" selected>🎯 Auto (Current Month)</option>
+                                    <option value="0">🎊 New Year Celebration</option>
+                                    <option value="1">💝 Valentine's Day</option>
+                                    <option value="2">🍀 Spring & St. Patrick's Day</option>
+                                    <option value="3">🌸 Easter Sunday</option>
+                                    <option value="4">🌻 Mother's Day</option>
+                                    <option value="5">👨 Father's Day</option>
+                                    <option value="6">☀️ Summer Celebration</option>
+                                    <option value="7">🌊 Beach & Vacation Season</option>
+                                    <option value="8">🍂 Autumn & Back to School</option>
+                                    <option value="9">🎃 Halloween & Spooky Season</option>
+                                    <option value="10">🇳🇬 Nigerian Independence Day</option>
+                                    <option value="11">🎄 Christmas & New Year's Eve</option>
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label">Who's receiving this card?</label>
                                 <input type="text" class="form-control" id="recipientName" placeholder="Enter recipient's name..." required>
@@ -292,9 +310,9 @@
                             </div>
                         </div>
                         <div class="social-links">
-                            <a href="https://github.com/faithinator-dev" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://x.com/Faithinato38775?t=kf6unPAVy_XDQluQ0A9d-Q&s=09" class="social-link"><i class="bi bi-twitter-x"" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="hhttps://www.linkedin.com/in/faith-oguntoye-87453238a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/faithinator-dev" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                            <a href="https://x.com/Faithinato38775?t=kf6unPAVy_XDQluQ0A9d-Q&s=09" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.linkedin.com/in/faith-oguntoye-87453238a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
                         </div>
                     </div>
                 </div>
@@ -307,8 +325,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-4">
-                    <h5><i class="fas fa-snowflake"></i> ToluCards</h5>
-                    <p>Create and share beautiful personalized Christmas cards. Spreading joy one card at a time! 🎄</p>
+                    <h5><i id="footerIcon" class="fas fa-snowflake"></i> ToluCards</h5>
+                    <p id="footerDescription">Create and share beautiful personalized greeting cards for every season. Spreading joy one card at a time!</p>
                 </div>
                 <div class="col-lg-4 mb-4">
                     <h5>Quick Links</h5>
@@ -322,10 +340,10 @@
                 <div class="col-lg-4 mb-4">
                     <h5>Stay Connected</h5>
                     <div class="footer-social">
-                        <a href="hhttps://github.com/faithinator-dev" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://x.com/Faithinato38775?t=kf6unPAVy_XDQluQ0A9d-Q&s=09k" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="https://wa.me/+2347046111023" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://www.instagram.com/faithinator001?utm_source=qr&igsh=MTViY20zdDh0aWplaA==" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com/faithinator-dev" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        <a href="https://x.com/Faithinato38775?t=kf6unPAVy_XDQluQ0A9d-Q&s=09" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/+2347046111023" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/faithinator001?utm_source=qr&igsh=MTViY20zdDh0aWplaA==" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
