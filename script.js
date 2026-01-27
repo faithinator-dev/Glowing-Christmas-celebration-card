@@ -4,6 +4,27 @@ AOS.init({
     offset: 100
 });
 
+// --- Firebase Configuration ---
+// TODO: Replace these placeholders with your actual Firebase Project keys
+const firebaseConfig = {
+  apiKey: "AIzaSyDKVAH0MF5eygD76QJU9JA7yYU3bBTFvbY",
+  authDomain: "tolucard-1.firebaseapp.com",
+  projectId: "tolucard-1",
+  storageBucket: "tolucard-1.firebasestorage.app",
+  messagingSenderId: "1051683519212",
+  appId: "1:1051683519212:web:92b03a9bf48e418625c3c9"
+};
+
+// Initialize Firebase safely
+let db;
+try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    console.log("Firebase initialized");
+} catch (e) {
+    console.warn("Firebase config missing or invalid - Save feature will not persist online", e);
+}
+
 const monthlyThemes = {
     0: {
         name: "New Year",
@@ -1268,12 +1289,31 @@ if (downloadCard) {
 
 const copyLink = document.getElementById('copyLink');
 if (copyLink) {
-    copyLink.addEventListener('click', () => {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-            const original = copyLink.innerHTML;
-            copyLink.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            setTimeout(() => copyLink.innerHTML = original, 2000);
-        });
+    copyLink.addEventListener('click', async () => {
+        // Change button to loading state
+        const originalText = copyLink.innerHTML;
+        copyLink.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        copyLink.disabled = true;
+
+        try {
+            const cardId = await saveCard();
+            if (cardId) {
+                const shareUrl = `${window.location.origin}${window.location.pathname}?id=${cardId}`;
+                await navigator.clipboard.writeText(shareUrl);
+                copyLink.innerHTML = '<i class="fas fa-check"></i> Link Copied!';
+                alert("Surprise Link Copied! Send it to your friend! 🎁");
+            }
+        } catch (err) {
+            console.error(err);
+            copyLink.innerHTML = '<i class="fas fa-times"></i> Error';
+            // Fallback for offline testing
+            navigator.clipboard.writeText(window.location.href);
+        }
+
+        setTimeout(() => {
+            copyLink.innerHTML = originalText;
+            copyLink.disabled = false;
+        }, 3000);
     });
 }
 
@@ -1308,3 +1348,81 @@ if (monthlyBackgrounds[selectedMonth]) {
         img.src = src;
     });
 }
+
+/* --- Firebase Surprise & Logic Functions --- */
+
+// Save current card to Firestore
+async function saveCard() {
+    if (!db) return null; // Fallback if no firebase
+
+    console.log('Attempting to save card...'); // Debug
+    const cardData = {
+        recipient: document.getElementById('cardRecipient').innerText,
+        message: document.getElementById('cardMessage').innerText,
+        background: document.getElementById('cardBackground').src,
+        theme: document.getElementById('themeSelect').value,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    try {
+        const docRef = await db.collection('cards').add(cardData);
+        console.log('Card saved with ID: ', docRef.id);
+        return docRef.id;
+    } catch (e) {
+        console.error('Error adding document: ', e);
+        return null;
+    }
+}
+
+// Load a specific card from Firestore
+async function loadSurpriseCard(cardId) {
+    if (!db) return;
+
+    const overlay = document.getElementById('surpriseOverlay');
+    overlay.style.display = 'flex'; // Show overlay immediately
+    
+    // Setup gift box interaction
+    const giftBox = document.getElementById('giftBox');
+    const giftBoxContainer = document.querySelector('.gift-box-container');
+    const surpriseContent = document.getElementById('surpriseContent');
+
+    giftBoxContainer.addEventListener('click', async () => {
+        // Animation
+        giftBox.style.transform = 'scale(1.2) rotate(5deg)';
+        setTimeout(async () => {
+             // Hide box, show content
+            giftBoxContainer.style.display = 'none';
+            surpriseContent.style.display = 'block';
+            
+            // Fetch data
+            try {
+                const doc = await db.collection('cards').doc(cardId).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('surpriseRecipient').innerText = data.recipient;
+                    document.getElementById('surpriseMessage').innerText = data.message;
+                    document.getElementById('surpriseCardBg').src = data.background;
+                    
+                    // Trigger confetti for celebration
+                    createSnowflakes(); 
+                } else {
+                    document.getElementById('surpriseMessage').innerText = 'This card seems to have gotten lost in the snow!';
+                }
+            } catch (error) {
+                console.error('Error getting card:', error);
+            }
+        }, 500);
+    });
+}
+
+// Check URL for ID on load
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const cardId = urlParams.get('id');
+    
+    if (cardId) {
+        // It's a surprise link! 
+        loadSurpriseCard(cardId);
+    }
+});
+
