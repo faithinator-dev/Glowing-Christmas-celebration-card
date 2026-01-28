@@ -1396,48 +1396,29 @@ if (monthlyBackgrounds[selectedMonth]) {
 async function saveCard() {
     if (!db) return null; 
 
-    // Check auth for saving custom photos
+    // Check custom photos
     let backgroundUrl = document.getElementById('cardBackground').src;
     
-    // If it's a Base64 string (uploaded photo), upload to Storage
+    // If it's a Base64 string (uploaded photo)
     if (backgroundUrl.startsWith('data:image')) {
-         if (!currentUser) {
-            alert("You must be logged in to save cards with custom photos!");
-            const authModal = new bootstrap.Modal(document.getElementById('authModal'));
-            authModal.show();
-            throw new Error("User not logged in");
+        // Option 1: Restrict sharing for custom photos to save space/cost
+        const userChoice = confirm("Custom photos cannot be saved to the shared link on the free plan (they require cloud storage).\n\nClick OK to share using the default theme background instead.\nClick Cancel to go back and download the image directly.");
+        
+        if (!userChoice) {
+            throw new Error("User cancelled share for custom photo");
         }
         
-        try {
-            const copyLinkBtn = document.getElementById('copyLink');
-            if(copyLinkBtn) copyLinkBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Uploading Image...';
-            
-            // Create a reference to the file
-            const timestamp = new Date().getTime();
-            const storageRef = storage.ref();
-            const fileRef = storageRef.child(`card-images/${currentUser.uid}/${timestamp}.jpg`);
-            
-            // Upload base64 string
-            // Need to strip the prefix
-             const message = backgroundUrl;
-             
-             await fileRef.putString(message, 'data_url');
-             backgroundUrl = await fileRef.getDownloadURL();
-             
-             console.log("Image uploaded to Storage:", backgroundUrl);
-             
-        } catch(e) {
-            console.error("Upload failed", e);
-            alert("Failed to upload image. Please try again.");
-            return null;
-        }
+        // Revert to theme background for the shared link
+        const themeIndex = document.getElementById('themeSelect').value;
+        const fallbackBg = monthlyBackgrounds[themeIndex] ? monthlyBackgrounds[themeIndex][0] : "https://images.unsplash.com/photo-1512389142860-9c1a17737d26";
+        backgroundUrl = fallbackBg;
     }
 
     console.log('Attempting to save card...'); 
     const cardData = {
         recipient: document.getElementById('cardRecipient').innerText,
         message: document.getElementById('cardMessage').innerText,
-        background: backgroundUrl, // Use the proper URL (Unsplash or Storage)
+        background: backgroundUrl, // Use the proper URL (Unsplash or Theme Default)
         theme: document.getElementById('themeSelect').value,
         userId: currentUser ? currentUser.uid : 'anonymous',
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1508,9 +1489,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* --- Firebase Auth & Storage Logic --- */
 
+
 const auth = firebase.auth();
-const storage = firebase.storage();
 let currentUser = null;
+// No storage used to keep it strictly free/simple as requested
 
 // Auth State Listener
 auth.onAuthStateChanged(user => {
@@ -1518,7 +1500,6 @@ auth.onAuthStateChanged(user => {
     const authNavItem = document.getElementById('authNavItem');
     const userProfileNavItem = document.getElementById('userProfileNavItem');
     const navUsername = document.getElementById('navUsername');
-    const photoUpload = document.getElementById('photoUpload');
     
     if (user) {
         // User is signed in
@@ -1530,13 +1511,10 @@ auth.onAuthStateChanged(user => {
         const modalEl = document.getElementById('authModal');
         const modal = bootstrap.Modal.getInstance(modalEl);
         if (modal) modal.hide();
-        
-        console.log('User signed in:', user.email);
     } else {
         // User is signed out
         if(authNavItem) authNavItem.classList.remove('d-none');
         if(userProfileNavItem) userProfileNavItem.classList.add('d-none');
-        console.log('User signed out');
     }
 });
 
