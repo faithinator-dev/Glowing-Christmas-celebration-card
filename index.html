@@ -42,6 +42,21 @@
                     <li class="nav-item"><a class="nav-link" href="#generator"><i class="fas fa-magic"></i> Create Card</a></li>
                     <li class="nav-item"><a class="nav-link" href="#features"><i class="fas fa-star"></i> Features</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li class="nav-item" id="authNavItem">
+                        <button class="btn btn-outline-light ms-2" data-bs-toggle="modal" data-bs-target="#authModal">
+                            <i class="fas fa-user"></i> Login / Sign Up
+                        </button>
+                    </li>
+                    <li class="nav-item d-none" id="userProfileNavItem">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-warning ms-2 dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle"></i> <span id="navUsername">User</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><button class="dropdown-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -154,6 +169,8 @@
                 <h2 class="section-title">Create Your Card</h2>
                 <p class="section-subtitle">Personalize your festive greetings in just a few clicks</p>
             </div>
+
+           
             
             <div class="row justify-content-center mb-5">
                 <div class="col-lg-8" data-aos="fade-up">
@@ -177,10 +194,20 @@
                                     <option value="11">🎄 December - Christmas & Holidays</option>
                                 </select>
                             </div>
+
+                       
+
                             <div class="mb-3">
                                 <label class="form-label">Who's receiving this card?</label>
                                 <input type="text" class="form-control" id="recipientName" placeholder="Enter recipient's name..." required>
                             </div>
+                        <!-- ...existing code... -->
+                            <div class="mb-3">
+                                <label class="form-label">Or Upload Your Own Photo</label>
+                                <input class="form-control" type="file" id="photoUpload" accept="image/*">
+                                <div class="form-text text-muted">Use a high-quality landscape photo for best results.</div>
+                            </div>
+                        <!-- ...existing code... -->
                             <div class="mb-3">
                                 <label class="form-label">Select wish length:</label>
                                 <div class="btn-group w-100">
@@ -225,6 +252,8 @@
                                 <i class="fas fa-user-edit"></i> Change Name
                             </button>
                         </div>
+                        
+                        
 
                         <div class="share-container" data-aos="fade-up">
                             <h3><i class="fas fa-share-alt"></i> Share Your ToluCard</h3>
@@ -385,9 +414,67 @@
         <div class="spinner-border text-warning"></div>
     </div>
 
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white border-warning">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title"><i class="fas fa-user-lock"></i> Account Access</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs mb-3" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active text-warning" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button">Sign Up</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Login Form -->
+                        <div class="tab-pane fade show active" id="login">
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="loginEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-warning w-100">Login</button>
+                            </form>
+                        </div>
+                        <!-- Signup Form -->
+                        <div class="tab-pane fade" id="signup">
+                            <form id="signupForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="signupName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="signupEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="signupPassword" minlength="6" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-warning w-100">Create Account</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

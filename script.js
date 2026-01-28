@@ -4,6 +4,47 @@ AOS.init({
     offset: 100
 });
 
+
+// // ...existing code...
+    
+//     // Add this event listener for the file upload
+//     const photoUpload = document.getElementById('photoUpload');
+    
+//     photoUpload.addEventListener('change', function(e) {
+//         const file = e.target.files[0];
+//         if (file) {
+//             const reader = new FileReader();
+            
+//             reader.onload = function(event) {
+//                 // Set the uploaded image as the card background
+//                 cardBackground.src = event.target.result;
+                
+//                 // Show the card display section if it's hidden
+//                 cardDisplay.style.display = 'block';
+                
+//                 // Scroll to result
+//                 setTimeout(() => {
+//                     cardDisplay.scrollIntoView({ behavior: 'smooth' });
+//                 }, 100);
+//             };
+            
+//             reader.readAsDataURL(file);
+//         }
+//     });
+
+//     // Modify the existing 'changeBackgroundBtn' to clear the custom upload
+//     changeBackgroundBtn.addEventListener('click', () => {
+//         // Clear the file input so user can go back to auto-themes
+//         photoUpload.value = ''; 
+        
+//         // ...existing logic to randomize background from array...
+//         const currentMonthData = monthlyThemes[currentThemeIndex];
+//         const randomBg = currentMonthData.backgrounds[Math.floor(Math.random() * currentMonthData.backgrounds.length)];
+//         cardBackground.src = randomBg;
+//     });
+
+// // ...existing code...
+
 // --- Firebase Configuration ---
 // TODO: Replace these placeholders with your actual Firebase Project keys
 const firebaseConfig = {
@@ -1353,14 +1394,52 @@ if (monthlyBackgrounds[selectedMonth]) {
 
 // Save current card to Firestore
 async function saveCard() {
-    if (!db) return null; // Fallback if no firebase
+    if (!db) return null; 
 
-    console.log('Attempting to save card...'); // Debug
+    // Check auth for saving custom photos
+    let backgroundUrl = document.getElementById('cardBackground').src;
+    
+    // If it's a Base64 string (uploaded photo), upload to Storage
+    if (backgroundUrl.startsWith('data:image')) {
+         if (!currentUser) {
+            alert("You must be logged in to save cards with custom photos!");
+            const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+            authModal.show();
+            throw new Error("User not logged in");
+        }
+        
+        try {
+            const copyLinkBtn = document.getElementById('copyLink');
+            if(copyLinkBtn) copyLinkBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Uploading Image...';
+            
+            // Create a reference to the file
+            const timestamp = new Date().getTime();
+            const storageRef = storage.ref();
+            const fileRef = storageRef.child(`card-images/${currentUser.uid}/${timestamp}.jpg`);
+            
+            // Upload base64 string
+            // Need to strip the prefix
+             const message = backgroundUrl;
+             
+             await fileRef.putString(message, 'data_url');
+             backgroundUrl = await fileRef.getDownloadURL();
+             
+             console.log("Image uploaded to Storage:", backgroundUrl);
+             
+        } catch(e) {
+            console.error("Upload failed", e);
+            alert("Failed to upload image. Please try again.");
+            return null;
+        }
+    }
+
+    console.log('Attempting to save card...'); 
     const cardData = {
         recipient: document.getElementById('cardRecipient').innerText,
         message: document.getElementById('cardMessage').innerText,
-        background: document.getElementById('cardBackground').src,
+        background: backgroundUrl, // Use the proper URL (Unsplash or Storage)
         theme: document.getElementById('themeSelect').value,
+        userId: currentUser ? currentUser.uid : 'anonymous',
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
 
@@ -1425,4 +1504,110 @@ window.addEventListener('DOMContentLoaded', () => {
         loadSurpriseCard(cardId);
     }
 });
+
+
+/* --- Firebase Auth & Storage Logic --- */
+
+const auth = firebase.auth();
+const storage = firebase.storage();
+let currentUser = null;
+
+// Auth State Listener
+auth.onAuthStateChanged(user => {
+    currentUser = user;
+    const authNavItem = document.getElementById('authNavItem');
+    const userProfileNavItem = document.getElementById('userProfileNavItem');
+    const navUsername = document.getElementById('navUsername');
+    const photoUpload = document.getElementById('photoUpload');
+    
+    if (user) {
+        // User is signed in
+        if(authNavItem) authNavItem.classList.add('d-none');
+        if(userProfileNavItem) userProfileNavItem.classList.remove('d-none');
+        if(navUsername) navUsername.innerText = user.displayName || user.email.split('@')[0];
+        
+        // Close modal if open
+        const modalEl = document.getElementById('authModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+        
+        console.log('User signed in:', user.email);
+    } else {
+        // User is signed out
+        if(authNavItem) authNavItem.classList.remove('d-none');
+        if(userProfileNavItem) userProfileNavItem.classList.add('d-none');
+        console.log('User signed out');
+    }
+});
+
+// Sign Up Handler
+document.getElementById('signupForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const name = document.getElementById('signupName').value;
+    
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Update profile with name
+            userCredential.user.updateProfile({
+                displayName: name
+            }).then(() => {
+                alert('Account created successfully! Welcome, ' + name);
+                window.location.reload(); // Refresh to update UI completely
+            });
+        })
+        .catch((error) => {
+            alert('Error: ' + error.message);
+        });
+});
+
+// Login Handler
+document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            const modalEl = document.getElementById('authModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+             // Manually trigger UI update locally if needed
+        })
+        .catch((error) => {
+            alert('Login Failed: ' + error.message);
+        });
+});
+
+// Logout Handler
+document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    auth.signOut().then(() => {
+        alert('Logged out successfully');
+    });
+});
+
+// --- Photo Upload Logic ---
+const photoUpload = document.getElementById('photoUpload');
+if (photoUpload) {
+    photoUpload.addEventListener('change', function(e) {
+        if (!currentUser) {
+            alert('Please Login/Sign Up to upload custom photos!');
+            this.value = ''; // Reset input
+            // Show modal
+            const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+            authModal.show();
+            return;
+        }
+
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('cardBackground').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
 
