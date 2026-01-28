@@ -1224,16 +1224,81 @@ if (themeSelect) {
 }
 
 if (nameForm) {
+    // --- ADD THIS DATA STRUCTURE FOR PIDGIN & FUNNY WISHES ---
+    const specialWishes = {
+        pidgin: [
+            "How far! I just say make I wish you confirm season. Enjoy correct enjoyment!",
+            "Omo, this celebration go loud o! Make sure say you chop life before life chop you.",
+            "Benefits go follow you this season. No shaking, God dey your back!",
+            "See as you fresh! This season go favour you pass anything. Tuale!",
+            "Abeg chill with cold zobo and enjoy your day. You too much!",
+            "No wahala, just enjoyment. Blessing go locate you sharp sharp.",
+            "I hail o! Make everything soft for you this period. Cheers!",
+            "Who dey breeet? Na you o! Shine your eye, blessings dey come."
+        ],
+        funny: [
+            "I was going to buy you a gift, but I realized I am the gift. You're welcome!",
+            "Happy festive season! Please send your account number... just kidding!",
+            "May your calories not count this holiday season. Eat everything!",
+            "I love you more than Jollof Rice... okay maybe that's a lie, but close!",
+            "Sending you this card to distract you from the fact that I didn't get you a present.",
+            "Congratulations on surviving another year with me as a friend!",
+            "May your village people fall asleep while you succeed this month.",
+            "Enjoy the season, but remember to save small money for January o!"
+        ]
+    };
+
     nameForm.addEventListener('submit', (e) => {
         e.preventDefault();
         recipientName = recipientInput.value.trim();
         wishType = document.querySelector('input[name="wishType"]:checked').value;
         
         if (recipientName) {
-            if (cardMessage) cardMessage.textContent = getRandomWish(selectedMonth);
+            // Updated Wish Logic
+            let messageText = "";
+            if (wishType === 'pidgin') {
+                messageText = specialWishes.pidgin[Math.floor(Math.random() * specialWishes.pidgin.length)];
+            } else if (wishType === 'funny') {
+                messageText = specialWishes.funny[Math.floor(Math.random() * specialWishes.funny.length)];
+            } else {
+                messageText = getRandomWish(selectedMonth); // Uses the global wishType set above for short/long
+            }
+
+            if (cardMessage) cardMessage.textContent = messageText;
             if (cardRecipient) cardRecipient.textContent = recipientName;
-            currentBgIndex = Math.floor(Math.random() * (monthlyBackgrounds[selectedMonth]?.length || 5));
-            loadBackground(selectedMonth, currentBgIndex);
+            
+            // Check if user uploaded a photo
+            const photoInput = document.getElementById('photoUpload');
+            const hasUploadedPhoto = photoInput && photoInput.files && photoInput.files.length > 0;
+            
+            if (!hasUploadedPhoto) {
+                currentBgIndex = Math.floor(Math.random() * (monthlyBackgrounds[selectedMonth]?.length || 5));
+                loadBackground(selectedMonth, currentBgIndex);
+            }
+
+            // --- STICKER LOGIC ---
+            const stickerInput = document.querySelector('input[name="sticker"]:checked');
+            const stickerValue = stickerInput ? stickerInput.value : "";
+            const stickerEl = document.getElementById('cardSticker');
+            
+            // Reset classes
+            if (stickerEl) {
+                stickerEl.className = 'card-sticker'; 
+                stickerEl.style.display = 'none';
+
+                if (stickerValue) {
+                    stickerEl.style.display = 'block';
+                    stickerEl.classList.add(`sticker-${stickerValue}`);
+                    
+                    // Set Text
+                    if(stickerValue === 'owanbe') stickerEl.innerText = "OWANBE VIBES";
+                    else if(stickerValue === 'odogwu') stickerEl.innerText = "ODOGWU 👑";
+                    else if(stickerValue === 'bestie') stickerEl.innerText = "BESTIE 4 LIFE";
+                    else if(stickerValue === 'choplife') stickerEl.innerText = "CHOP LIFE";
+                }
+            }
+            // -----------------------------
+            
             if (cardDisplay) {
                 cardDisplay.style.display = 'block';
                 setTimeout(() => {
@@ -1585,6 +1650,74 @@ if (photoUpload) {
                 document.getElementById('cardBackground').src = event.target.result;
             };
             reader.readAsDataURL(file);
+        }
+    });
+}
+
+
+/* --- Music Player Logic --- */
+const musicBtn = document.getElementById('musicBtn');
+const bgAudio = document.getElementById('bgAudio');
+const musicStatus = document.getElementById('musicStatus');
+let isMusicPlaying = false;
+
+// Optional: Different music for Christmas month (11)
+const tunes = {
+    default: 'https://cdn.pixabay.com/audio/2022/10/25/audio_2910795c6a.mp3', // Upbeat Generic
+    christmas: 'https://cdn.pixabay.com/audio/2022/12/16/audio_10672e8504.mp3' // Holiday
+};
+
+if (musicBtn && bgAudio) {
+    musicBtn.addEventListener('click', () => {
+        if (isMusicPlaying) {
+            bgAudio.pause();
+            if (musicStatus) musicStatus.innerText = 'Play Music';
+            const icon = musicBtn.querySelector('i');
+            if (icon) icon.className = 'fas fa-music';
+            musicBtn.classList.remove('playing');
+            isMusicPlaying = false;
+        } else {
+            // Check current theme to pick song
+            const themeSelect = document.getElementById('themeSelect');
+            const currentTheme = themeSelect ? themeSelect.value : 'auto';
+            const song = (currentTheme == 11) ? tunes.christmas : tunes.default;
+            
+            if (bgAudio.src !== song) bgAudio.src = song;
+            
+            bgAudio.play()
+                .then(() => {
+                    if (musicStatus) musicStatus.innerText = 'Pause Music';
+                    const icon = musicBtn.querySelector('i');
+                    if (icon) icon.className = 'fas fa-pause';
+                    musicBtn.classList.add('playing');
+                    isMusicPlaying = true;
+                })
+                .catch(err => {
+                    console.log('Audio autoplay blocked', err);
+                    alert('Click again to start music! (Browsers block auto-audio)');
+                });
+        }
+    });
+}
+
+            const themeSelect = document.getElementById('themeSelect');
+            const currentTheme = themeSelect ? themeSelect.value : 'auto';
+            const song = (currentTheme == 11) ? tunes.christmas : tunes.default;
+            
+            if (bgAudio.src !== song) bgAudio.src = song;
+            
+            bgAudio.play()
+                .then(() => {
+                    if (musicStatus) musicStatus.innerText = 'Pause Music';
+                    const icon = musicBtn.querySelector('i');
+                    if (icon) icon.className = 'fas fa-pause';
+                    musicBtn.classList.add('playing');
+                    isMusicPlaying = true;
+                })
+                .catch(err => {
+                    console.log('Audio autoplay blocked', err);
+                    alert('Click again to start music! (Browsers block auto-audio)');
+                });
         }
     });
 }
