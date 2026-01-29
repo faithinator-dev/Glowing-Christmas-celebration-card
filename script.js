@@ -1218,7 +1218,11 @@ function loadBackground(monthIndex, bgIndex) {
 
 if (themeSelect) {
     themeSelect.addEventListener('change', (e) => {
-        selectedMonth = parseInt(e.target.value);
+        if (e.target.value === 'auto') {
+            selectedMonth = new Date().getMonth();
+        } else {
+            selectedMonth = parseInt(e.target.value);
+        }
         applyTheme(selectedMonth);
     });
 }
@@ -1267,14 +1271,9 @@ if (nameForm) {
             if (cardMessage) cardMessage.textContent = messageText;
             if (cardRecipient) cardRecipient.textContent = recipientName;
             
-            // Check if user uploaded a photo
-            const photoInput = document.getElementById('photoUpload');
-            const hasUploadedPhoto = photoInput && photoInput.files && photoInput.files.length > 0;
-            
-            if (!hasUploadedPhoto) {
-                currentBgIndex = Math.floor(Math.random() * (monthlyBackgrounds[selectedMonth]?.length || 5));
-                loadBackground(selectedMonth, currentBgIndex);
-            }
+            // Set random background from theme
+            currentBgIndex = Math.floor(Math.random() * (monthlyBackgrounds[selectedMonth]?.length || 5));
+            loadBackground(selectedMonth, currentBgIndex);
 
             // --- STICKER LOGIC ---
             const stickerInput = document.querySelector('input[name="sticker"]:checked');
@@ -1566,12 +1565,28 @@ auth.onAuthStateChanged(user => {
     const userProfileNavItem = document.getElementById('userProfileNavItem');
     const navUsername = document.getElementById('navUsername');
     
+    // New Dashboard Elements
+    const publicView = document.getElementById('publicEventsView');
+    const memberView = document.getElementById('memberEventsView');
+    const dashboardUser = document.getElementById('dashboardUsername');
+    const dailyHeader = document.getElementById('dailyHeader');
+
     if (user) {
         // User is signed in
         if(authNavItem) authNavItem.classList.add('d-none');
         if(userProfileNavItem) userProfileNavItem.classList.remove('d-none');
-        if(navUsername) navUsername.innerText = user.displayName || user.email.split('@')[0];
         
+        const displayName = user.displayName || user.email.split('@')[0];
+        if(navUsername) navUsername.innerText = displayName;
+        
+        // --- Dashboard Logic: Member View ---
+        if(publicView) publicView.style.display = 'none';
+        if(memberView) {
+            memberView.style.display = 'block';
+            if(dashboardUser) dashboardUser.innerText = displayName;
+        }
+        if(dailyHeader) dailyHeader.innerText = `Daily Dose for ${displayName}`;
+
         // Close modal if open
         const modalEl = document.getElementById('authModal');
         const modal = bootstrap.Modal.getInstance(modalEl);
@@ -1580,6 +1595,11 @@ auth.onAuthStateChanged(user => {
         // User is signed out
         if(authNavItem) authNavItem.classList.remove('d-none');
         if(userProfileNavItem) userProfileNavItem.classList.add('d-none');
+
+        // --- Dashboard Logic: Public View ---
+        if(publicView) publicView.style.display = 'block';
+        if(memberView) memberView.style.display = 'none';
+        if(dailyHeader) dailyHeader.innerText = "Daily Dose of Joy";
     }
 });
 
@@ -1630,32 +1650,7 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
     });
 });
 
-// --- Photo Upload Logic ---
-const photoUpload = document.getElementById('photoUpload');
-if (photoUpload) {
-    photoUpload.addEventListener('change', function(e) {
-        if (!currentUser) {
-            alert('Please Login/Sign Up to upload custom photos!');
-            this.value = ''; // Reset input
-            // Show modal
-            const authModal = new bootstrap.Modal(document.getElementById('authModal'));
-            authModal.show();
-            return;
-        }
-
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                document.getElementById('cardBackground').src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-}
-
-
-/* --- Music Player Logic --- */
+// --- Music Player Logic ---
 const musicBtn = document.getElementById('musicBtn');
 const bgAudio = document.getElementById('bgAudio');
 const musicStatus = document.getElementById('musicStatus');
@@ -1663,17 +1658,37 @@ let isMusicPlaying = false;
 
 // Optional: Different music for Christmas month (11)
 const tunes = {
-    default: 'https://cdn.pixabay.com/audio/2022/10/25/audio_2910795c6a.mp3', // Upbeat Generic
-    christmas: 'https://cdn.pixabay.com/audio/2022/12/16/audio_10672e8504.mp3' // Holiday
+    default: 'assets/audio/default.mp3', // Upbeat Generic
+    christmas: 'assets/audio/christmas.mp3' // Holiday
 };
 
 if (musicBtn && bgAudio) {
+    // Attempt Auto-play on load
+    window.addEventListener('load', () => {
+        const promise = bgAudio.play();
+        if (promise !== undefined) {
+            promise.then(_ => {
+                // Autoplay started!
+                const icon = musicBtn.querySelector('i');
+                if (icon) icon.className = 'fas fa-volume-high';
+                musicBtn.classList.add('playing');
+                isMusicPlaying = true;
+            }).catch(error => {
+                // Autoplay was prevented
+                console.log("Autoplay prevented. User interaction required.");
+                const icon = musicBtn.querySelector('i');
+                if (icon) icon.className = 'fas fa-volume-xmark';
+                musicBtn.classList.remove('playing');
+                isMusicPlaying = false;
+            });
+        }
+    });
+
     musicBtn.addEventListener('click', () => {
         if (isMusicPlaying) {
             bgAudio.pause();
-            if (musicStatus) musicStatus.innerText = 'Play Music';
             const icon = musicBtn.querySelector('i');
-            if (icon) icon.className = 'fas fa-music';
+            if (icon) icon.className = 'fas fa-volume-xmark';
             musicBtn.classList.remove('playing');
             isMusicPlaying = false;
         } else {
@@ -1682,43 +1697,49 @@ if (musicBtn && bgAudio) {
             const currentTheme = themeSelect ? themeSelect.value : 'auto';
             const song = (currentTheme == 11) ? tunes.christmas : tunes.default;
             
-            if (bgAudio.src !== song) bgAudio.src = song;
+            // Only change src if it's different, to avoid reloading if just paused
+            if (!bgAudio.src.includes(song)) bgAudio.src = song;
             
             bgAudio.play()
                 .then(() => {
-                    if (musicStatus) musicStatus.innerText = 'Pause Music';
                     const icon = musicBtn.querySelector('i');
-                    if (icon) icon.className = 'fas fa-pause';
+                    if (icon) icon.className = 'fas fa-volume-high';
                     musicBtn.classList.add('playing');
                     isMusicPlaying = true;
                 })
                 .catch(err => {
-                    console.log('Audio autoplay blocked', err);
-                    alert('Click again to start music! (Browsers block auto-audio)');
+                    console.log('Playback error', err);
                 });
         }
     });
 }
 
-            const themeSelect = document.getElementById('themeSelect');
-            const currentTheme = themeSelect ? themeSelect.value : 'auto';
-            const song = (currentTheme == 11) ? tunes.christmas : tunes.default;
-            
-            if (bgAudio.src !== song) bgAudio.src = song;
-            
-            bgAudio.play()
-                .then(() => {
-                    if (musicStatus) musicStatus.innerText = 'Pause Music';
-                    const icon = musicBtn.querySelector('i');
-                    if (icon) icon.className = 'fas fa-pause';
-                    musicBtn.classList.add('playing');
-                    isMusicPlaying = true;
-                })
-                .catch(err => {
-                    console.log('Audio autoplay blocked', err);
-                    alert('Click again to start music! (Browsers block auto-audio)');
-                });
-        }
+
+// --- 3D Tilt Effect Logic ---
+const cardContainer = document.getElementById('cardContainer');
+if (cardContainer) {
+    // Add wrapper class for perspective
+    const wrapper = document.createElement('div');
+    wrapper.className = 'card-3d-wrapper';
+    cardContainer.parentNode.insertBefore(wrapper, cardContainer);
+    wrapper.appendChild(cardContainer);
+
+    wrapper.addEventListener('mousemove', (e) => {
+        const rect = wrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg rotation
+        const rotateY = ((x - centerX) / centerX) * 10;
+
+        cardContainer.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+        cardContainer.style.transform = 'rotateX(0) rotateY(0) scale(1)';
     });
 }
 

@@ -847,3 +847,101 @@ body::before {
     }
 }
 
+
+/* Floating Music Button */
+.music-floating-btn {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 2px solid #FFD700;
+    color: #FFD700;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.music-floating-btn:hover {
+    background: #FFD700;
+    color: #1a1a2e;
+    transform: rotate(360deg);
+}
+
+.music-floating-btn.playing {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #1a1a2e;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    animation: music-pulse 2s infinite;
+}
+
+@keyframes music-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+.music-floating-btn i {
+    font-size: 1.2rem;
+}
+
+
+/* --- New Visual Enhancements --- */
+
+/* Glassmorphism Effect */
+.glass-effect, .input-card, .contact-card, .share-container, .feature-card, .fun-facts {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Adjust text colors inside glass containers for readability */
+.input-card label, .input-card h3, .share-container h3, .feature-card h3, .feature-card p, .fun-facts h3, .fun-facts p, .contact-card p, .text-muted {
+    color: #fff !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.form-control, .form-select {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff !important;
+}
+
+.form-control:focus, .form-select:focus {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+/* Placeholder color fix */
+::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Select option color fix (since options can't be transparent) */
+option {
+    background-color: #333;
+    color: white;
+}
+
+/* 3D Tilt Effect Container */
+.card-3d-wrapper {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.card-container {
+    transition: transform 0.1s;
+    transform-style: preserve-3d;
+}
+
