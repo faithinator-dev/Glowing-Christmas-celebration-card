@@ -1565,28 +1565,12 @@ auth.onAuthStateChanged(user => {
     const userProfileNavItem = document.getElementById('userProfileNavItem');
     const navUsername = document.getElementById('navUsername');
     
-    // New Dashboard Elements
-    const publicView = document.getElementById('publicEventsView');
-    const memberView = document.getElementById('memberEventsView');
-    const dashboardUser = document.getElementById('dashboardUsername');
-    const dailyHeader = document.getElementById('dailyHeader');
-
     if (user) {
         // User is signed in
         if(authNavItem) authNavItem.classList.add('d-none');
         if(userProfileNavItem) userProfileNavItem.classList.remove('d-none');
+        if(navUsername) navUsername.innerText = user.displayName || user.email.split('@')[0];
         
-        const displayName = user.displayName || user.email.split('@')[0];
-        if(navUsername) navUsername.innerText = displayName;
-        
-        // --- Dashboard Logic: Member View ---
-        if(publicView) publicView.style.display = 'none';
-        if(memberView) {
-            memberView.style.display = 'block';
-            if(dashboardUser) dashboardUser.innerText = displayName;
-        }
-        if(dailyHeader) dailyHeader.innerText = `Daily Dose for ${displayName}`;
-
         // Close modal if open
         const modalEl = document.getElementById('authModal');
         const modal = bootstrap.Modal.getInstance(modalEl);
@@ -1595,11 +1579,6 @@ auth.onAuthStateChanged(user => {
         // User is signed out
         if(authNavItem) authNavItem.classList.remove('d-none');
         if(userProfileNavItem) userProfileNavItem.classList.add('d-none');
-
-        // --- Dashboard Logic: Public View ---
-        if(publicView) publicView.style.display = 'block';
-        if(memberView) memberView.style.display = 'none';
-        if(dailyHeader) dailyHeader.innerText = "Daily Dose of Joy";
     }
 });
 
