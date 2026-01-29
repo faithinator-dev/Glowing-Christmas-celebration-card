@@ -1637,8 +1637,8 @@ let isMusicPlaying = false;
 
 // Optional: Different music for Christmas month (11)
 const tunes = {
-    default: 'assets/audio/default.mp3', // Upbeat Generic
-    christmas: 'assets/audio/christmas.mp3' // Holiday
+    default: 'https://cdn.pixabay.com/audio/2022/10/25/audio_2910795c6a.mp3', // Upbeat Generic
+    christmas: 'https://cdn.pixabay.com/audio/2022/12/16/audio_10672e8504.mp3' // Holiday
 };
 
 if (musicBtn && bgAudio) {
@@ -1656,7 +1656,7 @@ if (musicBtn && bgAudio) {
                 // Autoplay was prevented
                 console.log("Autoplay prevented. User interaction required.");
                 const icon = musicBtn.querySelector('i');
-                if (icon) icon.className = 'fas fa-volume-xmark';
+                if (icon) icon.className = 'fas fa-volume-xmark'; // "Pause and Cancel" (Speaker with X)
                 musicBtn.classList.remove('playing');
                 isMusicPlaying = false;
             });
@@ -1667,7 +1667,7 @@ if (musicBtn && bgAudio) {
         if (isMusicPlaying) {
             bgAudio.pause();
             const icon = musicBtn.querySelector('i');
-            if (icon) icon.className = 'fas fa-volume-xmark';
+            if (icon) icon.className = 'fas fa-volume-xmark'; // "Pause and Cancel" (Speaker with X)
             musicBtn.classList.remove('playing');
             isMusicPlaying = false;
         } else {
@@ -1682,7 +1682,7 @@ if (musicBtn && bgAudio) {
             bgAudio.play()
                 .then(() => {
                     const icon = musicBtn.querySelector('i');
-                    if (icon) icon.className = 'fas fa-volume-high';
+                    if (icon) icon.className = 'fas fa-volume-high'; // "Speaker"
                     musicBtn.classList.add('playing');
                     isMusicPlaying = true;
                 })
