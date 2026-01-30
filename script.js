@@ -1377,12 +1377,21 @@ if (downloadCard) {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         const themeName = monthlyThemes[selectedMonth]?.name.replace(/\s+/g, '_') || "Card";
         
+        // Add SEO watermark before capturing
+        const watermark = document.createElement('div');
+        watermark.style.cssText = 'position: absolute; bottom: 10px; right: 15px; background: rgba(0,0,0,0.6); color: white; padding: 5px 10px; border-radius: 5px; font-size: 11px; font-family: Arial; z-index: 100;';
+        watermark.innerHTML = '🎨 Create Free Cards at <strong>tolutekcard.vercel.app</strong>';
+        container.appendChild(watermark);
+        
         html2canvas(container, {
             scale: 2,
             useCORS: true,
             allowTaint: true,
             backgroundColor: null
         }).then(canvas => {
+            // Remove watermark after capture
+            container.removeChild(watermark);
+            
             const link = document.createElement('a');
             link.download = `${themeName}_${recipientName.replace(/\s+/g, '_')}_2026.png`;
             link.href = canvas.toDataURL('image/png');
