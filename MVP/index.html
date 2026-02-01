@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ToluCards - Create personalized Christmas greeting cards with 50+ backgrounds and 200+ wishes">
+    <meta property="og:title" content="ToluCards - Festive Christmas Greetings">
+    <meta property="og:description" content="Create and share beautiful personalized Christmas cards">
+    <title>ToluCards - Create & Share Festive Christmas Greetings</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Great+Vibes&family=Poppins:wght@300;400;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Snowflakes -->
+    <div id="snowflakes-container"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-snowflake rotating-icon"></i> <span>ToluCards</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#generator"><i class="fas fa-magic"></i> Create Card</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features"><i class="fas fa-star"></i> Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-gift"></i> Christmas 2025
+                        </div>
+                        <h1 class="hero-title">
+                            Create <span class="text-gradient">Magical</span><br>Christmas Cards
+                        </h1>
+                        <p class="hero-subtitle">
+                            Share joy, spread love, and create unforgettable memories with personalized festive greetings
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#generator" class="btn btn-hero-primary">
+                                <i class="fas fa-rocket"></i> Start Creating
+                            </a>
+                            <a href="#features" class="btn btn-hero-secondary">
+                                <i class="fas fa-play-circle"></i> Learn More
+                            </a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                                <div class="stat-icon"><i class="fas fa-images"></i></div>
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Backgrounds</div>
+                            </div>
+                            <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+                                <div class="stat-icon"><i class="fas fa-heart"></i></div>
+                                <div class="stat-number">200+</div>
+                                <div class="stat-label">Wishes</div>
+                            </div>
+                            <div class="stat-item" data-aos="fade-up" data-aos-delay="600">
+                                <div class="stat-icon"><i class="fas fa-share-alt"></i></div>
+                                <div class="stat-number">∞</div>
+                                <div class="stat-label">Memories</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800" alt="Christmas Card">
+                        <div class="floating-icons">
+                            <i class="fas fa-snowflake floating-icon"></i>
+                            <i class="fas fa-star floating-icon"></i>
+                            <i class="fas fa-gift floating-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <a href="#generator"><i class="fas fa-chevron-down"></i></a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Why Choose ToluCards?</h2>
+                <p class="section-subtitle">Everything you need for the perfect Christmas greeting</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                        <h3>50+ Backgrounds</h3>
+                        <p>Beautiful Christmas-themed backgrounds</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                        <h3>200+ Wishes</h3>
+                        <p>Long heartfelt or short sweet messages</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3>Fully Responsive</h3>
+                        <p>Perfect on any device</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-share-nodes"></i></div>
+                        <h3>Easy Sharing</h3>
+                        <p>Share or download instantly</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generator -->
+    <section id="generator" class="generator-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Create Your Card</h2>
+                <p class="section-subtitle">Personalize your festive greetings in just a few clicks</p>
+            </div>
+            
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="input-card">
+                        <form id="nameForm">
+                            <div class="mb-3">
+                                <label class="form-label">Who's receiving this card?</label>
+                                <input type="text" class="form-control" id="recipientName" placeholder="Enter recipient's name..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Select wish length:</label>
+                                <div class="btn-group w-100">
+                                    <input type="radio" class="btn-check" name="wishType" id="shortWish" value="short" checked>
+                                    <label class="btn btn-outline-primary" for="shortWish">
+                                        <i class="fas fa-comment"></i> Short & Sweet
+                                    </label>
+                                    <input type="radio" class="btn-check" name="wishType" id="longWish" value="long">
+                                    <label class="btn btn-outline-primary" for="longWish">
+                                        <i class="fas fa-comments"></i> Long & Heartfelt
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-generate w-100">
+                                <i class="fas fa-magic"></i> Generate My ToluCard
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cardDisplay" class="card-display" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card-container" id="cardContainer" data-aos="zoom-in">
+                            <img src="" alt="Background" class="card-bg" id="cardBackground">
+                            <div class="card-overlay">
+                                <p class="card-message" id="cardMessage"></p>
+                                <h2 class="card-recipient" id="cardRecipient"></h2>
+                                <p class="card-signature">With Love ❤️ | <strong>ToluCards</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="card-controls">
+                            <button class="control-btn" id="changeBackgroundBtn">
+                                <i class="fas fa-image"></i> Change Background
+                            </button>
+                            <button class="control-btn" id="randomizeWishBtn">
+                                <i class="fas fa-sync-alt"></i> New Message
+                            </button>
+                            <button class="control-btn" id="changeNameBtn">
+                                <i class="fas fa-user-edit"></i> Change Name
+                            </button>
+                        </div>
+
+                        <div class="share-container" data-aos="fade-up">
+                            <h3><i class="fas fa-share-alt"></i> Share Your ToluCard</h3>
+                            <div class="share-buttons">
+                                <button class="share-btn whatsapp" id="shareWhatsApp">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </button>
+                                <button class="share-btn facebook" id="shareFacebook">
+                                    <i class="fab fa-facebook-f"></i> Facebook
+                                </button>
+                                <button class="share-btn twitter" id="shareTwitter">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </button>
+                                <button class="share-btn download" id="downloadCard">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="share-btn copy" id="copyLink">
+                                    <i class="fas fa-link"></i> Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Let's Connect!</h2>
+                <p class="section-subtitle">Have questions or want to say hello?</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <img src="https://ui-avatars.com/api/?name=ToluTek&size=200&background=FFD700&color=165B33&bold=true" alt="ToluTek">
+                        </div>
+                        <h3>ToluTek</h3>
+                        <p class="contact-title">Full-Stack Developer | Christmas Enthusiast</p>
+                        <p>Hi! I'm the creator of ToluCards. I love building fun, interactive web experiences. This is my gift to you - spread the festive cheer! 🎄</p>
+                        <div class="contact-links">
+                            <a href="https://github.com/tolutek" target="_blank" class="contact-btn">
+                                <i class="fab fa-github"></i> View My Projects
+                            </a>
+                            <a href="https://wa.me/YOUR_NUMBER" target="_blank" class="contact-btn whatsapp">
+                                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="fun-facts">
+                        <h3><i class="fas fa-lightbulb"></i> Fun Facts</h3>
+                        <div class="fact-item">
+                            <i class="fas fa-code"></i>
+                            <div>
+                                <h4>Built with Love</h4>
+                                <p>HTML5, CSS3, JavaScript, Bootstrap 5</p>
+                            </div>
+                        </div>
+                        <div class="fact-item">
+                            <i class="fas fa-images"></i>
+                            <div>
+                                <h4>50+ Beautiful Backgrounds</h4>
+                                <p>High-quality images from Unsplash & Pexels</p>
+                            </div>
+                        </div>
+                        <div class="fact-item">
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <h4>200+ Unique Wishes</h4>
+                                <p>Short & sweet to long & heartfelt</p>
+                            </div>
+                        </div>
+                        <div class="fact-item">
+                            <i class="fas fa-rocket"></i>
+                            <div>
+                                <h4>100% Free Forever</h4>
+                                <p>No ads, no sign-ups, just joy!</p>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://github.com/tolutek" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://twitter.com/tolutek" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="https://linkedin.com/in/tolutek" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5><i class="fas fa-snowflake"></i> ToluCards</h5>
+                    <p>Create and share beautiful personalized Christmas cards. Spreading joy one card at a time! 🎄</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#generator">Create Card</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Stay Connected</h5>
+                    <div class="footer-social">
+                        <a href="https://github.com/tolutek" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://twitter.com/tolutek" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/YOUR_NUMBER" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-4 border-top">
+                <p>© 2025 ToluCards. Crafted with <i class="fas fa-heart text-danger"></i> by <strong>ToluTek</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner-border text-warning"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
