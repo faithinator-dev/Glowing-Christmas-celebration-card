@@ -1692,6 +1692,28 @@ if (themeSelect) {
 }
 
 if (nameForm) {
+    // Handle occasion selector
+    const occasionSelect = document.getElementById('occasionSelect');
+    if (occasionSelect) {
+        occasionSelect.addEventListener('change', (e) => {
+            selectedOccasion = e.target.value || null;
+        });
+    }
+
+    // Handle custom message toggle
+    const wishTypeRadios = document.querySelectorAll('input[name="wishType"]');
+    const customMessageContainer = document.getElementById('customMessageContainer');
+    
+    wishTypeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.value === 'custom' && customMessageContainer) {
+                customMessageContainer.style.display = 'block';
+            } else if (customMessageContainer) {
+                customMessageContainer.style.display = 'none';
+            }
+        });
+    });
+
     // --- ADD THIS DATA STRUCTURE FOR PIDGIN & FUNNY WISHES ---
     const specialWishes = {
         pidgin: [
@@ -1724,7 +1746,13 @@ if (nameForm) {
         if (recipientName) {
             // Updated Wish Logic
             let messageText = "";
-            if (wishType === 'pidgin') {
+            if (wishType === 'custom') {
+                // Use custom message if provided
+                const customMsgInput = document.getElementById('customMessage');
+                messageText = customMsgInput && customMsgInput.value.trim() 
+                    ? customMsgInput.value.trim() 
+                    : "Wishing you all the best!";
+            } else if (wishType === 'pidgin') {
                 messageText = specialWishes.pidgin[Math.floor(Math.random() * specialWishes.pidgin.length)];
             } else if (wishType === 'funny') {
                 messageText = specialWishes.funny[Math.floor(Math.random() * specialWishes.funny.length)];
@@ -1739,7 +1767,7 @@ if (nameForm) {
             currentBgIndex = Math.floor(Math.random() * (monthlyBackgrounds[selectedMonth]?.length || 5));
             loadBackground(selectedMonth, currentBgIndex);
 
-            // --- STICKER LOGIC ---
+            // --- UPDATED STICKER LOGIC ---
             const stickerInput = document.querySelector('input[name="sticker"]:checked');
             const stickerValue = stickerInput ? stickerInput.value : "";
             const stickerEl = document.getElementById('cardSticker');
@@ -1753,11 +1781,19 @@ if (nameForm) {
                     stickerEl.style.display = 'block';
                     stickerEl.classList.add(`sticker-${stickerValue}`);
                     
-                    // Set Text
-                    if(stickerValue === 'owanbe') stickerEl.innerText = "OWANBE VIBES";
-                    else if(stickerValue === 'odogwu') stickerEl.innerText = "ODOGWU 👑";
-                    else if(stickerValue === 'bestie') stickerEl.innerText = "BESTIE 4 LIFE";
-                    else if(stickerValue === 'choplife') stickerEl.innerText = "CHOP LIFE";
+                    // Set Text with new English labels
+                    const stickerTexts = {
+                        'party': '🎉 PARTY TIME',
+                        'champion': '👑 CHAMPION',
+                        'bestie': '💙 BEST FRIEND',
+                        'celebrate': '🥳 CELEBRATE',
+                        'special': '⭐ SPECIAL ONE',
+                        'amazing': '✨ AMAZING',
+                        'blessed': '🙏 BLESSED',
+                        'superstar': '🌟 SUPERSTAR'
+                    };
+                    
+                    stickerEl.innerText = stickerTexts[stickerValue] || '';
                 }
             }
             // -----------------------------
@@ -1810,8 +1846,10 @@ if (changeNameBtn) {
 const shareWhatsApp = document.getElementById('shareWhatsApp');
 if (shareWhatsApp) {
     shareWhatsApp.addEventListener('click', () => {
-        const themeName = monthlyThemes[selectedMonth]?.name || "Seasonal";
-        const msg = `Check out this beautiful ${themeName} card I created for ${recipientName}! ✨\n\nCreate yours: ${window.location.href}`;
+        const occasionName = selectedOccasion 
+            ? selectedOccasion.charAt(0).toUpperCase() + selectedOccasion.slice(1)
+            : (monthlyThemes[selectedMonth]?.name || "Seasonal");
+        const msg = `🎉 Wow! Check out this amazing ${occasionName} card I just created for ${recipientName}! ✨\n\n💝 You can create your own personalized greeting cards too - it's FREE and super easy!\n\n👉 Try it now: ${window.location.href}\n\nJoin me and spread joy with beautiful custom cards! 🎨`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
     });
 }
@@ -1819,15 +1857,18 @@ if (shareWhatsApp) {
 const shareFacebook = document.getElementById('shareFacebook');
 if (shareFacebook) {
     shareFacebook.addEventListener('click', () => {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+        const url = `${window.location.href}?ref=facebook&invite=true`;
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent('Create beautiful personalized greeting cards for FREE! Join me on ToluCards 🎨✨')}`, '_blank');
     });
 }
 
 const shareTwitter = document.getElementById('shareTwitter');
 if (shareTwitter) {
     shareTwitter.addEventListener('click', () => {
-        const themeName = monthlyThemes[selectedMonth]?.name || "Seasonal";
-        const text = `I created a beautiful ${themeName} card for ${recipientName}! ✨`;
+        const occasionName = selectedOccasion 
+            ? selectedOccasion.charAt(0).toUpperCase() + selectedOccasion.slice(1)
+            : (monthlyThemes[selectedMonth]?.name || "Seasonal");
+        const text = `🎉 Just created an amazing ${occasionName} card for ${recipientName} on ToluCards! ✨\n\n💝 Create your own FREE personalized cards - it's super easy! Join me! 🎨`;
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
     });
 }
