@@ -280,6 +280,22 @@
                                 </select>
                             </div>
 
+                            <div class="mb-3">
+                                <label class="form-label">Or Select a Special Occasion</label>
+                                <select class="form-control" id="occasionSelect">
+                                    <option value="">None (Use Month Theme)</option>
+                                    <option value="birthday">🎂 Birthday</option>
+                                    <option value="wedding">💒 Wedding</option>
+                                    <option value="anniversary">💕 Anniversary</option>
+                                    <option value="graduation">🎓 Graduation</option>
+                                    <option value="newbaby">👶 New Baby</option>
+                                    <option value="congratulations">🏆 Congratulations</option>
+                                    <option value="thankyou">🙏 Thank You</option>
+                                    <option value="newmonth">🗓️ New Month</option>
+                                </select>
+                                <small class="text-muted">Special occasions override month themes</small>
+                            </div>
+
                        
 
                             <div class="mb-3">
@@ -314,7 +330,19 @@
                                             <i class="fas fa-laugh-squint"></i> Funny
                                         </label>
                                     </div>
+                                    <div class="col-12">
+                                        <input type="radio" class="btn-check" name="wishType" id="styleCustom" value="custom">
+                                        <label class="btn btn-outline-warning w-100" for="styleCustom">
+                                            <i class="fas fa-pen"></i> Write Your Own Message
+                                        </label>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="mb-3" id="customMessageContainer" style="display: none;">
+                                <label class="form-label">Your Custom Message:</label>
+                                <textarea class="form-control" id="customMessage" rows="4" placeholder="Write your personalized message here..."></textarea>
+                                <small class="text-muted">Write your own heartfelt message to make the card truly personal</small>
                             </div>
 
                             <div class="mb-4">
@@ -323,17 +351,29 @@
                                     <input type="radio" class="btn-check" name="sticker" id="noSticker" value="" checked>
                                     <label class="btn btn-outline-secondary btn-sm" for="noSticker">None</label>
 
-                                    <input type="radio" class="btn-check" name="sticker" id="sticker1" value="owanbe">
-                                    <label class="btn btn-outline-warning btn-sm" for="sticker1">🎉 Owanbe</label>
+                                    <input type="radio" class="btn-check" name="sticker" id="sticker1" value="party">
+                                    <label class="btn btn-outline-warning btn-sm" for="sticker1">🎉 Party</label>
 
-                                    <input type="radio" class="btn-check" name="sticker" id="sticker2" value="odogwu">
-                                    <label class="btn btn-outline-danger btn-sm" for="sticker2">👑 Odogwu</label>
+                                    <input type="radio" class="btn-check" name="sticker" id="sticker2" value="champion">
+                                    <label class="btn btn-outline-danger btn-sm" for="sticker2">👑 Champion</label>
 
                                     <input type="radio" class="btn-check" name="sticker" id="sticker3" value="bestie">
-                                    <label class="btn btn-outline-info btn-sm" for="sticker3">👯‍♀️ Bestie</label>
+                                    <label class="btn btn-outline-info btn-sm" for="sticker3">💙 Best Friend</label>
 
-                                    <input type="radio" class="btn-check" name="sticker" id="sticker4" value="choplife">
-                                    <label class="btn btn-outline-success btn-sm" for="sticker4">🥗 Chop</label>
+                                    <input type="radio" class="btn-check" name="sticker" id="sticker4" value="celebrate">
+                                    <label class="btn btn-outline-success btn-sm" for="sticker4">🥳 Celebrate</label>
+
+                                    <input type="radio" class="btn-check" name="sticker" id="sticker5" value="special">
+                                    <label class="btn btn-outline-primary btn-sm" for="sticker5">⭐ Special One</label>
+
+                                    <input type="radio" class="btn-check" name="sticker" id="sticker6" value="amazing">
+                                    <label class="btn btn-outline-danger btn-sm" for="sticker6">✨ Amazing</label>
+
+                                    <input type="radio" class="btn-check" name="sticker" id="sticker7" value="blessed">
+                                    <label class="btn btn-outline-success btn-sm" for="sticker7">🙏 Blessed</label>
+
+                                    <input type="radio" class="btn-check" name="sticker" id="sticker8" value="superstar">
+                                    <label class="btn btn-outline-warning btn-sm" for="sticker8">🌟 Superstar</label>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-generate w-100">
@@ -376,22 +416,23 @@
                         
 
                         <div class="share-container" data-aos="fade-up">
-                            <h3><i class="fas fa-share-alt"></i> Share Your ToluCard</h3>
+                            <h3><i class="fas fa-heart"></i> Spread the Love - Invite Your Friends!</h3>
+                            <p class="text-center mb-3">Share this amazing card and invite your friends to create their own!</p>
                             <div class="share-buttons">
                                 <button class="share-btn whatsapp" id="shareWhatsApp">
-                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                    <i class="fab fa-whatsapp"></i> Invite via WhatsApp
                                 </button>
                                 <button class="share-btn facebook" id="shareFacebook">
-                                    <i class="fab fa-facebook-f"></i> Facebook
+                                    <i class="fab fa-facebook-f"></i> Invite on Facebook
                                 </button>
                                 <button class="share-btn twitter" id="shareTwitter">
-                                    <i class="fab fa-twitter"></i> Twitter
+                                    <i class="fab fa-twitter"></i> Invite on Twitter
                                 </button>
                                 <button class="share-btn download" id="downloadCard">
-                                    <i class="fas fa-download"></i> Download
+                                    <i class="fas fa-download"></i> Download Card
                                 </button>
                                 <button class="share-btn copy" id="copyLink">
-                                    <i class="fas fa-link"></i> Copy Link
+                                    <i class="fas fa-link"></i> Copy Invite Link
                                 </button>
                             </div>
                         </div>
