@@ -1911,22 +1911,24 @@ if (copyLink) {
     copyLink.addEventListener('click', async () => {
         // Change button to loading state
         const originalText = copyLink.innerHTML;
-        copyLink.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        copyLink.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating invite link...';
         copyLink.disabled = true;
 
         try {
             const cardId = await saveCard();
             if (cardId) {
-                const shareUrl = `${window.location.origin}${window.location.pathname}?id=${cardId}`;
+                const shareUrl = `${window.location.origin}${window.location.pathname}?id=${cardId}&invite=true`;
                 await navigator.clipboard.writeText(shareUrl);
-                copyLink.innerHTML = '<i class="fas fa-check"></i> Link Copied!';
-                alert("Surprise Link Copied! Send it to your friend! 🎁");
+                copyLink.innerHTML = '<i class="fas fa-check"></i> Invite Link Copied!';
+                alert("🎉 Perfect! Your invite link is copied!\n\n💝 Share it with friends and invite them to create their own beautiful cards too!\n\nThey'll love it! 😊");
             }
         } catch (err) {
             console.error(err);
             copyLink.innerHTML = '<i class="fas fa-times"></i> Error';
             // Fallback for offline testing
-            navigator.clipboard.writeText(window.location.href);
+            const inviteMsg = `🎨 Create beautiful personalized greeting cards FREE at ToluCards!\n${window.location.href}`;
+            navigator.clipboard.writeText(inviteMsg);
+            copyLink.innerHTML = '<i class="fas fa-check"></i> Invite Message Copied!';
         }
 
         setTimeout(() => {
